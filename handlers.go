@@ -31,7 +31,7 @@ func CreateStatus(c *gin.Context) {
     if err := c.ShouldBindJSON(&las_t_scoring); err == nil {
         las_t_scoring_clean = las_t_scoring.ToClean()
         las_status_datum = las_t_scoring_clean.Score()
-        las_status = append(las_status, las_status_datum)
+        las_status.Add(las_status_datum)
         c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status})
     } else {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
