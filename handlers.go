@@ -32,7 +32,7 @@ func CreateStatus(c *gin.Context) {
         las_t_scoring_clean = las_t_scoring.ToClean()
         las_status_datum = las_t_scoring_clean.Score()
         las_status.Add(las_status_datum)
-	produceKafka(topic, las_status_datum)
+	las_status_datum.ProduceKafka(topic)
         c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status_datum})
     } else {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

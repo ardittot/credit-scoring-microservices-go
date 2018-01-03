@@ -20,7 +20,7 @@ func InitKafka() (err error) {
 	return
 }
 
-func produceKafka(topic string, out Las_status) {
+func (out Las_status) ProduceKafka(topic string) {
         value, err := json.Marshal(out)
 	if err == nil {
 		deliveryChan := make(chan kafka.Event)
