@@ -8,10 +8,10 @@ import (
 )
 
 var producer *kafka.Producer
-var topic, broker string
+var broker string
+//var topic string
 
 func InitKafka() (err error) {
-	topic = "test2"
 	broker = "10.148.0.4:9092"
 	producer, err = kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": broker})
 	if err!=nil{
@@ -20,7 +20,8 @@ func InitKafka() (err error) {
 	return
 }
 
-func (out Las_status) ProduceKafka(topic string) {
+func (out Las_status) ProduceKafka() {
+	topic := "test2"
         value, err := json.Marshal(out)
 	if err == nil {
 		deliveryChan := make(chan kafka.Event)
