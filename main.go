@@ -19,7 +19,7 @@ func main() {
   InitKafkaProducer()
   InitKafkaConsumer()
   go func() { 
-	output, out_byte := consumeKafka()
+	_, out_byte := consumeKafka()
 	fmt.Printf("Message:\n%s\n", string(out_byte))
   }()
 
