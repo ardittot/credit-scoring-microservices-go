@@ -5,14 +5,15 @@ import (
         "github.com/confluentinc/confluent-kafka-go/kafka"
         "os"
         "encoding/json"
-	//"syscall"
-	//"os/signal"
+	"syscall"
+	"os/signal"
 )
 
 var producer *kafka.Producer
 var consumer *kafka.Consumer
 var broker string
 //var topic string
+var sigchan chan os.Signal
 
 func InitKafkaProducer() (err error) {
 	broker = "10.148.0.4:9092"
@@ -27,6 +28,10 @@ func InitKafkaConsumer() (err error) {
 	broker = "10.148.0.4:9092"
 	group := "test2-group"
 	topic := "test2"
+	
+	sigchan = make(chan os.Signal, 1)
+	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
+	
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers":               broker,
 		"group.id":                        group,
@@ -67,18 +72,42 @@ func consumeKafka() (out Las_status_array) {
 		return
 	}
 
-	switch e := ev.(type) {
-	case *kafka.Message:
-		consumer.Commit()
-		//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
-		json.Unmarshal(e.Value, &out)
-	case kafka.PartitionEOF:
-		fmt.Printf("%% Reached %v\n", e)
-	case kafka.Error:
-		fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
-	default:
-		fmt.Printf("Ignored %v\n", e)
-	}
+// 	switch e := ev.(type) {
+// 	case *kafka.Message:
+// 		consumer.Commit()
+// 		//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
+// 		json.Unmarshal(e.Value, &out)
+// 	case kafka.PartitionEOF:
+// 		fmt.Printf("%% Reached %v\n", e)
+// 	case kafka.Error:
+// 		fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
+// 	default:
+// 		fmt.Printf("Ignored %v\n", e)
+// 	}
+	
+	select {
+		case sig := <-sigchan:
+			fmt.Printf("Caught signal %v: terminating\n", sig)
+
+		case ev := <-c.Events():
+			switch e := ev.(type) {
+			case kafka.AssignedPartitions:
+				fmt.Fprintf(os.Stderr, "%% %v\n", e)
+				c.Assign(e.Partitions)
+			case kafka.RevokedPartitions:
+				fmt.Fprintf(os.Stderr, "%% %v\n", e)
+				c.Unassign()
+			case *kafka.Message:
+				//consumer.Commit()
+				json.Unmarshal(e.Value, &out)
+				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
+			case kafka.PartitionEOF:
+				fmt.Printf("%% Reached %v\n", e)
+			case kafka.Error:
+				fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
+			}
+		}
+	
 	return
 }
 
