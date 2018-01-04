@@ -5,6 +5,7 @@ import (
         "github.com/confluentinc/confluent-kafka-go/kafka"
         "os"
         "encoding/json"
+	"syscall"
 )
 
 var producer *kafka.Producer
@@ -63,7 +64,7 @@ func (out *interface{}) ConsumeKafka() {
 	topic := "test2"
 	
 	sigchan := make(chan os.Signal, 1)
-	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
+	os.signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 	
 	run := true
 	for run == true {
