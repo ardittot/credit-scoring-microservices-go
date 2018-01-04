@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"fmt"
 )
 
 var router *gin.Engine
