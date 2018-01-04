@@ -8,8 +8,8 @@ import (
 )
 
 func GetStatus(c *gin.Context) {
-    //output := consumeKafka()
-    //fmt.Printf("Message:\n%s\n%s\n", output[0].ID_Scoring, output[0].Score)
+    output := consumeKafka()
+    fmt.Printf("Message:\n%s\n%s\n", output[0].ID_Scoring, output[0].Score)
     c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status})
 }
 
