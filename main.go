@@ -18,10 +18,10 @@ func main() {
   // Initialize kafka
   InitKafkaProducer()
   InitKafkaConsumer()
-  go func() { 
-	out := consumeKafka()
-	fmt.Printf("%% Message :\n%s\n%s\n", out[0].ID_Scoring, out[0].Score)
-  }()
+  //go func() { 
+	//out := consumeKafka()
+	//fmt.Printf("%% Message :\n%s\n%s\n", out[0].ID_Scoring, out[0].Score)
+  //}()
 
   // Initialize the routes
   initializeRoutes()
