@@ -76,7 +76,6 @@ func consumeKafka() (out Las_status_array) {
 		fmt.Printf("%% Reached %v\n", e)
 	case kafka.Error:
 		fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
-		run = false
 	default:
 		fmt.Printf("Ignored %v\n", e)
 	}
