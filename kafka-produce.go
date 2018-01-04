@@ -80,8 +80,8 @@ func consumeKafka() (out Las_status_array) {
 
 			switch e := ev.(type) {
 			case *kafka.Message:
-				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
-				json.Unmarshal(e.Value, out)
+				//json.Unmarshal(e.Value, out)
+				fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
 			case kafka.PartitionEOF:
 				fmt.Printf("%% Reached %v\n", e)
 			case kafka.Error:
