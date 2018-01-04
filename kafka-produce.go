@@ -5,8 +5,8 @@ import (
         "github.com/confluentinc/confluent-kafka-go/kafka"
         "os"
         "encoding/json"
-	"syscall"
-	"os/signal"
+	//"syscall"
+	//"os/signal"
 )
 
 var producer *kafka.Producer
