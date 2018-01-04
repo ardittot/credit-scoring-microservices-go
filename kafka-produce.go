@@ -64,8 +64,9 @@ func (out Las_status) ProduceKafka() {
 func consumeKafka() (out Las_status_array) {
 	
 	ev := consumer.Poll(0)
-	if ev == nil {
-		continue
+	if ev != nil {
+		out = Las_status_array{}
+		return
 	}
 
 	switch e := ev.(type) {
