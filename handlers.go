@@ -7,7 +7,7 @@ import (
 )
 
 func GetStatus(c *gin.Context) {
-    las_status.ConsumeKafka()
+    consumeKafka(las_status)
     c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status})
 }
 
