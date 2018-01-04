@@ -93,10 +93,10 @@ func consumeKafka() (out Las_status_array) {
 			switch e := ev.(type) {
 			case kafka.AssignedPartitions:
 				fmt.Fprintf(os.Stderr, "%% %v\n", e)
-				c.Assign(e.Partitions)
+				consumer.Assign(e.Partitions)
 			case kafka.RevokedPartitions:
 				fmt.Fprintf(os.Stderr, "%% %v\n", e)
-				c.Unassign()
+				consumer.Unassign()
 			case *kafka.Message:
 				//consumer.Commit()
 				json.Unmarshal(e.Value, &out)
