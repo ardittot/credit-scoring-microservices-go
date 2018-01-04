@@ -19,8 +19,8 @@ func main() {
   InitKafkaProducer()
   InitKafkaConsumer()
   go func() { 
-	output := consumeKafka()
-        fmt.Printf("Message:\n%+v\n", output)
+	output, out_byte := consumeKafka()
+	fmt.Printf("Message:\n%s\n", string(out_byte))
   }()
 
   // Initialize the routes
