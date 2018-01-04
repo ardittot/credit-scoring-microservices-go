@@ -81,7 +81,6 @@ func consumeKafka() (out Las_status_array) {
 	default:
 		fmt.Printf("Ignored %v\n", e)
 	}
-	}
 	return
 }
 
