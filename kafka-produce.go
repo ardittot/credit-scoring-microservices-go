@@ -66,30 +66,27 @@ func consumeKafka() (out Las_status_array) {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 	
-	run := true
-	for run == true {
-		select {
-		case sig := <-sigchan:
-			fmt.Printf("Caught signal %v: terminating\n", sig)
+	select {
+	case sig := <-sigchan:
+		fmt.Printf("Caught signal %v: terminating\n", sig)
+		run = false
+	default:
+		ev := consumer.Poll(0)
+		if ev == nil {
+			continue
+		}
+
+		switch e := ev.(type) {
+		case *kafka.Message:
+			//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
+			json.Unmarshal(e.Value, &out)
+		case kafka.PartitionEOF:
+			fmt.Printf("%% Reached %v\n", e)
+		case kafka.Error:
+			fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
 			run = false
 		default:
-			ev := consumer.Poll(0)
-			if ev == nil {
-				continue
-			}
-
-			switch e := ev.(type) {
-			case *kafka.Message:
-				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
-				json.Unmarshal(e.Value, &out)
-			case kafka.PartitionEOF:
-				fmt.Printf("%% Reached %v\n", e)
-			case kafka.Error:
-				fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
-				run = false
-			default:
-				fmt.Printf("Ignored %v\n", e)
-			}
+			fmt.Printf("Ignored %v\n", e)
 		}
 	}
 	return
