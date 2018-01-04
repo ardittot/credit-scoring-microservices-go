@@ -69,6 +69,7 @@ func consumeKafka() (out Las_status_array) {
 
 	switch e := ev.(type) {
 	case *kafka.Message:
+		consumer.Commit()
 		//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
 		json.Unmarshal(e.Value, &out)
 	case kafka.PartitionEOF:
