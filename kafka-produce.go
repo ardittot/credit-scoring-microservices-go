@@ -66,7 +66,7 @@ func (out Las_status) ProduceKafka() {
 	}
 }
 
-func consumeKafka() (out Las_status_array) {
+func consumeKafka() (out Las_status_array, out_byte []byte) {
 
 	select {
 		case sig := <-sigchan:
@@ -82,6 +82,7 @@ func consumeKafka() (out Las_status_array) {
 				consumer.Unassign()
 			case *kafka.Message:
 				//consumer.Commit()
+				out_byte = e.Value
 				json.Unmarshal(e.Value, &out)
 				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
 			case kafka.PartitionEOF:
