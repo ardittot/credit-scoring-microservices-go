@@ -62,7 +62,6 @@ func (out Las_status) ProduceKafka() {
 }
 
 func consumeKafka() (out Las_status_array) {
-	topic := "test2"
 	
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
