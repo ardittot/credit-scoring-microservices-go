@@ -15,7 +15,7 @@ func main() {
   las_status = InitLasStatus()
 
   // Initialize kafka
-  InitKafka()
+  InitKafkaProducer()
 
   // Initialize the routes
   initializeRoutes()
