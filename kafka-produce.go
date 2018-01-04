@@ -89,7 +89,7 @@ func consumeKafka() (out Las_status_array) {
 		case sig := <-sigchan:
 			fmt.Printf("Caught signal %v: terminating\n", sig)
 
-		case ev := <-c.Events():
+		case ev := <-consumer.Events():
 			switch e := ev.(type) {
 			case kafka.AssignedPartitions:
 				fmt.Fprintf(os.Stderr, "%% %v\n", e)
