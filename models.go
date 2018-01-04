@@ -193,7 +193,7 @@ func (l *Las_t_scoring_clean_array) Delete(id uint64) {
 // LAS_STATUS
 type Las_status struct {
     ID_Scoring uint64 `json:"id_scoring" default:nil`
-    Score float32 `json:"status" default:nil`
+    Score float32 `json:"score" default:nil`
 }
 
 // LAS_STATUS Array
