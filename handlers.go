@@ -4,7 +4,7 @@ import (
     "github.com/gin-gonic/gin"
     "net/http"
     "strconv"
-    "fmt"
+    //"fmt"
 )
 
 func GetStatus(c *gin.Context) {
