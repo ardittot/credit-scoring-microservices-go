@@ -16,6 +16,7 @@ func main() {
 
   // Initialize kafka
   InitKafkaProducer()
+  InitKafkaConsumer()
 
   // Initialize the routes
   initializeRoutes()
