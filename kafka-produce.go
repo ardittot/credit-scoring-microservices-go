@@ -6,6 +6,7 @@ import (
         "os"
         "encoding/json"
 	"syscall"
+	"os/signal"
 )
 
 var producer *kafka.Producer
@@ -36,7 +37,7 @@ func InitKafkaConsumer() (err error) {
 	if err!=nil{
 		os.Exit(1)
 	}
-	topics = []string{topic}
+	topics := []string{topic}
 	err = consumer.SubscribeTopics(topics, nil)
 	if err!=nil{
 		os.Exit(2)
@@ -60,11 +61,11 @@ func (out Las_status) ProduceKafka() {
 	}
 }
 
-func (out *interface{}) ConsumeKafka() {
+func consumeKafka() (out interface{}) {
 	topic := "test2"
 	
 	sigchan := make(chan os.Signal, 1)
-	os.signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 	
 	run := true
 	for run == true {
@@ -81,7 +82,7 @@ func (out *interface{}) ConsumeKafka() {
 			switch e := ev.(type) {
 			case *kafka.Message:
 				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
-				json.Unmarshal(e.Value, *out)
+				json.Unmarshal(e.Value, out)
 			case kafka.PartitionEOF:
 				fmt.Printf("%% Reached %v\n", e)
 			case kafka.Error:
