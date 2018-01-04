@@ -73,14 +73,14 @@ func consumeKafka() (out Las_status_array) {
 			fmt.Printf("Caught signal %v: terminating\n", sig)
 			run = false
 		default:
-			ev := consumer.Poll(100)
+			ev := consumer.Poll(0)
 			if ev == nil {
 				continue
 			}
 
 			switch e := ev.(type) {
 			case *kafka.Message:
-				fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
+				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
 				json.Unmarshal(e.Value, &out)
 			case kafka.PartitionEOF:
 				fmt.Printf("%% Reached %v\n", e)
