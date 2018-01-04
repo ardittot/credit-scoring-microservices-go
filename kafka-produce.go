@@ -81,7 +81,7 @@ func consumeKafka() (out Las_status, out_byte []byte) {
 				fmt.Fprintf(os.Stderr, "%% %v\n", e)
 				consumer.Unassign()
 			case *kafka.Message:
-				//consumer.Commit()
+				consumer.Commit()
 				out_byte = e.Value
 				json.Unmarshal(e.Value, &out)
 				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
