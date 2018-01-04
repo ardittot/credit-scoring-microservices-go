@@ -32,7 +32,7 @@ func InitKafkaConsumer() (err error) {
 	sigchan = make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 
-	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
+	consumer, err = kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers":               broker,
 		"group.id":                        group,
 		"session.timeout.ms":              6000,
