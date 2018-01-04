@@ -23,7 +23,7 @@ func InitKafkaProducer() (err error) {
 
 func InitKafkaConsumer() (err error) {
 	broker = "10.148.0.4:9092"
-	group = "test2-group"
+	group := "test2-group"
 	topic := "test2"
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers":               broker,
@@ -35,7 +35,8 @@ func InitKafkaConsumer() (err error) {
 	if err!=nil{
 		os.Exit(1)
 	}
-	err = consumer.SubscribeTopics(topic, nil)
+	topics = []string{topic}
+	err = consumer.SubscribeTopics(topics, nil)
 	if err!=nil{
 		os.Exit(2)
 	}
@@ -58,7 +59,7 @@ func (out Las_status) ProduceKafka() {
 	}
 }
 
-func (out *Las_status) ConsumeKafka() {
+func (out *interface{}) ConsumeKafka() {
 	topic := "test2"
 	
 	sigchan := make(chan os.Signal, 1)
@@ -79,7 +80,7 @@ func (out *Las_status) ConsumeKafka() {
 			switch e := ev.(type) {
 			case *kafka.Message:
 				//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
-				json.Unmarshal(e.Value, out)
+				json.Unmarshal(e.Value, *out)
 			case kafka.PartitionEOF:
 				fmt.Printf("%% Reached %v\n", e)
 			case kafka.Error:
