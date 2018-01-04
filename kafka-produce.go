@@ -67,23 +67,6 @@ func (out Las_status) ProduceKafka() {
 }
 
 func consumeKafka() (out Las_status_array) {
-//	ev := consumer.Poll(0)
-//	if ev != nil {
-//		return
-//	}
-
-// 	switch e := ev.(type) {
-// 	case *kafka.Message:
-// 		consumer.Commit()
-// 		//fmt.Printf("%% Message on %s:\n%s\n", e.TopicPartition, string(e.Value))
-// 		json.Unmarshal(e.Value, &out)
-// 	case kafka.PartitionEOF:
-// 		fmt.Printf("%% Reached %v\n", e)
-// 	case kafka.Error:
-// 		fmt.Fprintf(os.Stderr, "%% Error: %v\n", e)
-// 	default:
-// 		fmt.Printf("Ignored %v\n", e)
-// 	}
 
 	select {
 		case sig := <-sigchan:
