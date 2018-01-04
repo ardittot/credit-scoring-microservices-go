@@ -28,10 +28,10 @@ func InitKafkaConsumer() (err error) {
 	broker = "10.148.0.4:9092"
 	group := "test2-group"
 	topic := "test2"
-	
+
 	sigchan = make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
-	
+
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers":               broker,
 		"group.id":                        group,
@@ -67,10 +67,10 @@ func (out Las_status) ProduceKafka() {
 }
 
 func consumeKafka() (out Las_status_array) {
-	ev := consumer.Poll(0)
-	if ev != nil {
-		return
-	}
+//	ev := consumer.Poll(0)
+//	if ev != nil {
+//		return
+//	}
 
 // 	switch e := ev.(type) {
 // 	case *kafka.Message:
@@ -84,7 +84,7 @@ func consumeKafka() (out Las_status_array) {
 // 	default:
 // 		fmt.Printf("Ignored %v\n", e)
 // 	}
-	
+
 	select {
 		case sig := <-sigchan:
 			fmt.Printf("Caught signal %v: terminating\n", sig)
