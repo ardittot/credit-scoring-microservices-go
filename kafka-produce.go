@@ -93,6 +93,6 @@ func consumeKafka() (out interface{}) {
 			}
 		}
 	}
-
+	return
 }
 
