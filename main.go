@@ -20,7 +20,7 @@ func main() {
   InitKafkaConsumer()
   go func() { 
 	out := consumeKafka()
-	fmt.Printf("%% Message on %s:\n%s\n%s\n", e.TopicPartition, out.ID_Scoring, out.Score)
+	fmt.Printf("%% Message :\n%s\n%s\n", out[0].ID_Scoring, out[0].Score)
   }()
 
   // Initialize the routes
