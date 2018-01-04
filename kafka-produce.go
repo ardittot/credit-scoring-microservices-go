@@ -66,7 +66,7 @@ func (out Las_status) ProduceKafka() {
 	}
 }
 
-func consumeKafka() (out Las_status_array, out_byte []byte) {
+func consumeKafka() (out Las_status, out_byte []byte) {
 
 	select {
 		case sig := <-sigchan:
