@@ -21,7 +21,7 @@ func main() {
   go func() { 
 	out := consumeKafka()
 	fmt.Printf("%% Message on %s:\n%s\n%s\n", e.TopicPartition, out.ID_Scoring, out.Score)
-  } 
+  }()
 
   // Initialize the routes
   initializeRoutes()
