@@ -4,12 +4,12 @@ import (
     "github.com/gin-gonic/gin"
     "net/http"
     "strconv"
-    "fmt"
+    //"fmt"
 )
 
 func GetStatus(c *gin.Context) {
-    _, out_byte := consumeKafka()
-    fmt.Printf("Message:\n%s\n", string(out_byte))
+    //_, out_byte := consumeKafka()
+    //fmt.Printf("Message:\n%s\n", string(out_byte))
     //fmt.Printf("Message:\n%+v\n", output)
     //c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": output})
     c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status})
@@ -37,7 +37,7 @@ func CreateStatus(c *gin.Context) {
         las_t_scoring_clean = las_t_scoring.ToClean()
         las_status_datum = las_t_scoring_clean.Score()
         las_status.Add(las_status_datum)
-	las_status_datum.ProduceKafka() // Produce data to Kafka topic
+	//las_status_datum.ProduceKafka() // Produce data to Kafka topic
         c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status_datum})
     } else {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -16,8 +16,8 @@ func main() {
   las_status = InitLasStatus()
 
   // Initialize kafka
-  InitKafkaProducer()
-  InitKafkaConsumer()
+  //InitKafkaProducer()
+  //InitKafkaConsumer()
 //   go func() { 
 // 	_, out_byte := consumeKafka()
 // 	fmt.Printf("Message:\n%s\n", string(out_byte))
