@@ -13,7 +13,7 @@ func main() {
 
   // Initialize data
   las_status = InitLasStatus()
-  // InitKafka()
+  InitKafkaConsumer()
 
   // Initialize the routes
   initializeRoutes()

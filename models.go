@@ -5,13 +5,13 @@ import (
 )
 
 // Functions Declaration
-func InitKafka() {
-    resty.R().SetBody("{\"topic\":\"test2\",\"group\":\"test-group\"}").Post("http://localhost:8020/subscribe/topic/add")
-    //resty.R().SetBody("{\"data\":[{\"topic\":\"test2\",\"url\":[\"http://0.0.0.0:8000/crs\"]}]}").Post("http://localhost:8020/subscribe/url/add")
+func InitKafkaConsumer() {
+    resty.R().SetBody("{\"topic\":\"crs-unscored\",\"group\":\"test-group\"}").Post("http://localhost:8020/subscribe/topic/add")
+    resty.R().SetBody("{\"data\":[{\"topic\":\"crs-unscored\",\"url\":[\"http://0.0.0.0:8000/crs\"]}]}").Post("http://localhost:8020/subscribe/url/add")
 }
 
 func ProduceKafka(data interface{}) {
-    resty.R().SetBody(data).Post("http://localhost:8020/publish/test2")
+    resty.R().SetBody(data).Post("http://localhost:8020/publish/crs-scored")
 }
 
 func InitLasStatus() []Las_status {
