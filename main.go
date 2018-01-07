@@ -19,7 +19,5 @@ func main() {
 
   // Start serving the application
   router.Run("0.0.0.0:8000")
-
-  // Terminate kafka
-  producer.Close()
+	
 }
