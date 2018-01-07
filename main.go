@@ -13,11 +13,12 @@ func main() {
 
   // Initialize data
   las_status = InitLasStatus()
+  InitKafka()
 
   // Initialize the routes
   initializeRoutes()
 
   // Start serving the application
   router.Run("0.0.0.0:8000")
-	
+
 }

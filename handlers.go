@@ -33,7 +33,7 @@ func CreateStatus(c *gin.Context) {
         las_t_scoring_clean = las_t_scoring.ToClean()
         las_status_datum = las_t_scoring_clean.Score()
         las_status.Add(las_status_datum)
-	//las_status_datum.ProduceKafka() // Produce data to Kafka topic
+	ProduceKafka(las_status_datum) // Produce data to Kafka topic
 	fmt.Printf("Credit scoring result: %v\n",las_status_datum)
         c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": las_status_datum})
     } else {

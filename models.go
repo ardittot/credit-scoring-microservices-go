@@ -1,5 +1,28 @@
 package main
 
+import (
+    "gopkg.in/resty.v1"
+)
+
+// Functions Declaration
+func InitKafka() {
+    resty.R().SetBody("{\"topic\":\"test2\",\"group\":\"test-group\"}").Post("http://localhost:8020/subscribe/topic/add")
+    //resty.R().SetBody("{\"data\":[{\"topic\":\"test2\",\"url\":[\"http://0.0.0.0:8000/crs\"]}]}").Post("http://localhost:8020/subscribe/url/add")
+}
+
+func ProduceKafka(data interface{}) {
+    resty.R().SetBody(data).Post("http://localhost:8020/publish/test2")
+}
+
+func InitLasStatus() []Las_status {
+    var las_status_out []Las_status
+	las_status_out = append(las_status_out, Las_status{ID_Scoring: 0, Score: 0})
+	return las_status_out
+}
+
+// Variables Declaration
+var las_status Las_status_array
+
 // Variable Types Declaration
 
 // LAS_T_SCORING
@@ -222,16 +245,6 @@ func (l *Las_status_array) Delete(id uint64) {
             break
         }
     }
-}
-
-// Variables Declaration
-var las_status Las_status_array
-
-// Functions Declaration
-func InitLasStatus() []Las_status {
-    var las_status_out []Las_status
-	las_status_out = append(las_status_out, Las_status{ID_Scoring: 0, Score: 0})
-	return las_status_out
 }
 
 // Class Interface Methods
