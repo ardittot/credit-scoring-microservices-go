@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	//"fmt"
 )
 
 var router *gin.Engine
@@ -14,14 +13,6 @@ func main() {
 
   // Initialize data
   las_status = InitLasStatus()
-
-  // Initialize kafka
-  //InitKafkaProducer()
-  //InitKafkaConsumer()
-//   go func() { 
-// 	_, out_byte := consumeKafka()
-// 	fmt.Printf("Message:\n%s\n", string(out_byte))
-//   }()
 
   // Initialize the routes
   initializeRoutes()
